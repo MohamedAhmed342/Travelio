@@ -79,28 +79,3 @@ app.post("/register", (req, res)=> {
 
 
 //book
-app.get("/book",(req,res) => {
-  res.send( { message: "Successfully Registered, Please login now." })
-  //res.render();
-  
-});
-app.post("/book",(req,res) => {
-  const userbook = new bookSchema({
-    frist_name: req.body.frist_name,
-    last_name:req.body.last_name,
-    Mobile_number : req.body. Mobile_number,
-    Leaving_from  : req.body.Leaving_from,
-    Type_of_Tickets : req.body. Type_of_Tickets,
-    passport : req.body.passport
-  });
-  userbook.save(err => {
-    if(err){
-      res.send(err)
-    }
-    else{
-      res.send({message: "Successfully book."})
-    }
-    
-  })
-  
-});
