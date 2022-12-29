@@ -1,3 +1,63 @@
+const express = require("express");
+const app = express();
+const port = 5000;
+app.set("view engine", "ejs");
+const userApi = require("./modules/userSchema");
+const bookSchema = require("./modules/bookSchema");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json())
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(
+    "mongodb+srv://abdelrahmanezzateid:abdo2027111@cluster0.uayasb0.mongodb.net/user_data?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    app.listen(port, () => {
+      console.log(`Example app listening at http://localhost:${port}`);
+    });
+  })
+
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+
+app.get("/register",(req,res) => {
+ // res.render("/test.ejs");
+
+ res.send({message: "User already registerd"})
+}) ;
+
+app.post("/register", (req, res)=> {
+  const email = req.body.email
+  const useA = new userApi({
+    name:req.body.name,
+    email : req.body.email,
+    password : req.body.password,
+    national_id:req.body.national_id
+  });
+  userApi.findOne({email: email}, (err, user) => {
+    if(err) res.send({message: "Something Went Wrong ..."})
+       if(user){
+          res.send({message: "User already registerd"})
+      } 
+         else {
+          useA.save(err => {
+              if(err) {
+                  res.send(err)
+              } else {
+                  res.send( { message: "Successfully Registered, Please login now." })
+              }
+          }) }
+      })
+  
+});
+
+
+//book
 
 app.get("/login",(req,res) => {
   res.send( { message: "Successfully login" })
@@ -8,13 +68,15 @@ app.get("/login",(req,res) => {
 
 
   app.post("/login", (req, res)=> {
+    const email = req.body.email
+    const password= req.body.password
     const useA = new userApi({
       email: req.body.email,  
       password : req.body.password
      });
    
-    useA.findOne({ email: email}, (err, user) => {
-                if(useA){
+    userApi.findOne({ email: email}, (err, user) => {
+                if(user){
             if(password === useA.password ) {
                 res.send({message: "Login Successfull"})
             } else {
@@ -51,86 +113,3 @@ app.post("/book",(req,res) => {
   })
   
 });
-
-
-
-const express = require("express");
-const app = express();
-const port = 5000;
-app.set("view engine", "ejs");
-const userApi = require("./modules/userSchema");
-//const bookSchema = require("./modules/bookSchema");
-const {}= require("express-validator");
-
-// for auto refresh
-// const path = require("path");
-// const livereload = require("livereload");
-// const liveReloadServer = livereload.createServer();
-// liveReloadServer.watch(path.join(__dirname, "public"));
-
-// const connectLivereload = require("connect-livereload");
-// app.use(connectLivereload());
-
-// liveReloadServer.server.once("connection", () => {
-//   setTimeout(() => {
-//     liveReloadServer.refresh("/");
-//   }, 100);
-// });
-
-
-const mongoose = require("mongoose");
-
-mongoose
-  .connect(
-    "mongodb+srv://abdelrahmanezzateid:abdo2027111@cluster0.uayasb0.mongodb.net/user_data?retryWrites=true&w=majority"
-  )
-  .then((result) => {
-    app.listen(port, () => {
-      console.log(`Example app listening at http://localhost:${port}`);
-    });
-  })
-
-  .catch((err) => {
-    console.log(err);
-  });
-// app.listen(port, () => {
-//        console.log(`Example app listening at http://localhost:${port}`);
-// });
-
-//   app.get("/", (req, res) => {
-//     console.log("welcome");
-//   });
-
-
-app.get("/register",(req,res) => {
- // res.render("/test.ejs");
-
- res.send({message: "User already registerd"})
-}) ;
-
-app.post("/register", (req, res)=> {
-
-  const useA = new userApi({
-    name:req.body.name,
-    email : req.body.email,
-    password : req.body.password,
-    national_id:req.body.national_id
-  });
-  useA.findOne({email: email}, (err, useA) => {
-       if(useA){
-          res.send({message: "User already registerd"})
-      } 
-         else {
-          useA.save(err => {
-              if(err) {
-                  res.send(err)
-              } else {
-                  res.send( { message: "Successfully Registered, Please login now." })
-              }
-          }) }
-      })
-  
-});
-
-
-//book
