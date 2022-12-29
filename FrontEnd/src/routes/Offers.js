@@ -1,4 +1,3 @@
-
 import Navbar from "../components/Navbar";
 import s1 from "../assets/logo.png"
 import s2 from "../assets/paris1.jpg"
