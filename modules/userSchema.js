@@ -9,9 +9,9 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema(  {
 
  
-   name: String,
-   email : String,
-   password : Schema.Types.Mixed ,
+   name :{type : String,required:true} ,
+   email :{type : String,required:true , uniqe:true} ,
+   password : { type:String , required:true , uniqe:true},
    national_id : Number,
 
 
