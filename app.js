@@ -1,4 +1,59 @@
 
+app.get("/login",(req,res) => {
+  res.send( { message: "Successfully login" })
+  //res.render();
+  
+})
+
+
+
+  app.post("/login", (req, res)=> {
+    const useA = new userApi({
+      email: req.body.email,  
+      password : req.body.password
+     });
+   
+    useA.findOne({ email: email}, (err, user) => {
+                if(useA){
+            if(password === useA.password ) {
+                res.send({message: "Login Successfull"})
+            } else {
+                res.send({ message: "wrong password"})
+            }
+        } else {
+            res.send({message: "User not registered"})
+        }
+    })
+})
+
+app.get("/book",(req,res) => {
+  res.send( { message: "Successfully Registered, Please login now." })
+  //res.render();
+  
+});
+app.post("/book",(req,res) => {
+  const userbook = new bookSchema({
+    frist_name: req.body.frist_name,
+    last_name:req.body.last_name,
+    Mobile_number : req.body. Mobile_number,
+    Leaving_from  : req.body.Leaving_from,
+    Type_of_Tickets : req.body. Type_of_Tickets,
+    passport : req.body.passport
+  });
+  userbook.save(err => {
+    if(err){
+      res.send(err)
+    }
+    else{
+      res.send({message: "Successfully book."})
+    }
+    
+  })
+  
+});
+
+
+
 const express = require("express");
 const app = express();
 const port = 5000;
