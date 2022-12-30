@@ -1,15 +1,16 @@
 import "./Hero.css";
-function Hero(){
-    return(
+
+function Hero() {
+    return (
         <>
-        <div className="hero">
-            <img alt="HerpImg"  src="ss.jpg"/>
-            <div className="hero-text">
-                <h1>Welcome To Travelio</h1>
+            <div className="hero">
+                <img alt="HerpImg" src="ss.jpg" />
+                <div className="hero-text">
+                    <h1>Welcome To Travelio</h1>
+                </div>
             </div>
-        </div>       
         </>
     );
-
 }
-export default Hero ;
+
+export default Hero;

@@ -14,7 +14,7 @@ function Login() {
             <div>
                 <form>
                     <center><h1 className="log">Login</h1>
-                        <div className="pol">
+                        <div className="pol1">
                             <h2><input className="textbox" type="text" placeholder="Enter your email" /></h2><br />
                             <h2><input className="textbox" type="password" placeholder="Enter your Password" /></h2><br />
                             <button className="button" type="button">Login</button><br /><br />
