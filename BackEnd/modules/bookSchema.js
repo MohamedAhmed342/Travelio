@@ -23,7 +23,7 @@ const BookSchema = new Schema2(  {
 
   // Create a model based on that schema
   
-const bookSchema = mongoose.model("userApi",BookSchema);
+const bookSchema = mongoose.model("Book",BookSchema);
   
 
 
