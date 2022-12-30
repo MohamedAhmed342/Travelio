@@ -1,23 +1,24 @@
 import "./Footer.css";
 
-const Footer = () => {
-    return (
+const Footer = () =>{
+    return(
         <div className="footer">
             <div className="top">
                 <div>
                     <h1>Travelio</h1>
                 </div>
                 <div>
-                    <a href="/">
-                        <i className="fa-brands fa-facebook-square"></i>
+                    <a href="/"> 
+                    <i className="fa-brands fa-facebook-square"></i>
                     </a>
-                    <a href="/">
-                        <i className="fa-brands fa-instagram-square"></i>
+                    <a href="/"> 
+                    <i className="fa-brands fa-instagram-square"></i>
                     </a>
-                    <a href="/">
-                        <i className="fa-brands fa-twitter-square"></i>
+                    <a href="/"> 
+                    <i className="fa-brands fa-twitter-square"></i>
                     </a>
                 </div>
+
             </div>
             <div className="bottom">
                 <div>
@@ -40,7 +41,9 @@ const Footer = () => {
                 </div>
             </div>
         </div>
+
     );
+
 }
 
-export default Footer;
+export default Footer ;
