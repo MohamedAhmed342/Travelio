@@ -27,8 +27,7 @@ mongoose
 
 app.get("/register",(req,res) => {
  // res.render("/test.ejs");
-
- res.send({message: "User already registerd"})
+ res.send({message: "Use post register"})
 }) ;
 
 app.post("/register", (req, res)=> {
@@ -56,11 +55,90 @@ app.post("/register", (req, res)=> {
   
 });
 
+app.get('/get/user/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (!id) 
+  return res.status(404).send({ err: "Missing Data Parameter" });
+
+  getUser(id)
+    .then(user => {
+      return res.status(200).send(user);
+    })
+    .catch(err => {
+      return res.status(404).send({ error: err.message });
+    });
+});
+
+const getUser = async (id) => {
+  const user_exists = await userApi.findOne({'_id': id});
+
+  if (!user_exists) throw new Error("User Not Found"); 
+
+  return user_exists;
+};
+
+app.get('/delete/user/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (!id) 
+  return res.status(404).send({ err: "Missing Data Parameter" });
+
+  deleteUser(id)
+    .then(user => {
+      return res.status(200).send(user);
+    })
+    .catch(err => {
+      return res.status(404).send({ error: err.message });
+    });
+});
+
+const deleteUser = async (id) => {
+  const user_exists = await userApi.findOne({'_id': id});
+
+  if (!user_exists) throw new Error("User Not Found"); 
+
+  return await userApi.deleteOne({'_id': id });
+}
+
+app.get('/update/user/:id', (req, res) => {
+  const id = req.params.id;
+  const name = req.body.name;
+
+  if (!id || !name) 
+  return res.status(404).send({ err: "Missing Data Parameter" });
+
+  updateUser(id, name)
+    .then(user => {
+      return res.status(200).send(user);
+    })
+    .catch(err => {
+      return res.status(404).send({ error: err.message });
+    });
+});
+
+const updateUser = async (id, name) => {
+  const user_exists = await userApi.find({'_id': id});
+
+  if (!user_exists) throw new Error("User Not Found"); 
+
+  await userApi.updateOne({ '_id': id }, { 'name': name });
+  
+  user_exists.name = name;
+  user_exists.password = undefined;
+  return user_exists;
+}
+
+app.get("/",(req,res) => {
+  res.send( { message: "Wellcome" })
+  //res.render();
+  
+})
 
 //book
 
 app.get("/login",(req,res) => {
-  res.send( { message: "Successfully login" })
+  res.send( { message: "please login" })
   //res.render();
   
 })
@@ -89,7 +167,7 @@ app.get("/login",(req,res) => {
 })
 
 app.get("/book",(req,res) => {
-  res.send( { message: "Successfully Registered, Please login now." })
+  res.send( { message: "Use post req" })
   //res.render();
   
 });
@@ -113,3 +191,50 @@ app.post("/book",(req,res) => {
   })
   
 });
+
+app.get('/get/book/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (!id) 
+  return res.status(404).send({ err: "Missing Data Parameter" });
+
+  getBook(id)
+    .then(book => {
+      return res.status(200).send(book);
+    })
+    .catch(err => {
+      return res.status(404).send({ error: err.message });
+    });
+});
+
+const getBook = async (id) => {
+  const book_exists = await bookSchema.findOne({'_id': id});
+
+  if (!book_exists) throw new Error("User Not Found"); 
+
+  return book_exists;
+};
+
+app.get('/delete/book/:id', (req, res) => {
+  const id = req.params.id;
+
+  if (!id) 
+  return res.status(404).send({ err: "Missing Data Parameter" });
+
+  deleteBook(id)
+    .then(book => {
+      return res.status(200).send(book);
+    })
+    .catch(err => {
+      return res.status(404).send({ error: err.message });
+    });
+});
+
+const deleteBook = async (id) => {
+  const book_exists = await bookSchema.findOne({'_id': id});
+
+  if (!book_exists) throw new Error("User Not Found"); 
+
+  return await bookSchema.deleteOne({'_id': id });
+}
+
